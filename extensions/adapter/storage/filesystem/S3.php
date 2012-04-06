@@ -64,9 +64,10 @@ class S3 extends \lithium\core\Object {
 	public function read($filename, array $options = array()) {
 		$s3 = new \AmazonS3($this->_config);
 		$bucket = $this->_config['bucket'];
+		$duration = isset($options['duration']) ? $options['duration'] : null;
 
-		return function($self, $params) use ($s3, $bucket) {
-			return $s3->get_object_url($bucket, $params['filename'], '48 hours');
+		return function($self, $params) use ($s3, $bucket, $duration) {
+			return $s3->get_object_url($bucket, $params['filename'], $duration);
 		};
 	}
 
